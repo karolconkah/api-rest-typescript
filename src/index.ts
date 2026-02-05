@@ -1,3 +1,4 @@
+import './server/shared/services';
 import { server } from './server/server';
 
 server.listen(process.env.PORT || 3333, () => {

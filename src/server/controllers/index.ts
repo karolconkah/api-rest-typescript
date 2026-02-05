@@ -1,1 +1,10 @@
 export { create as createCidade } from './cidades';
+export { createValidation as createCidadeValidation } from './cidades';
+export { getAll as getAllCidades } from './cidades';
+export { getAllValidation as getAllCidadesValidation } from './cidades';
+export { getById as getByIdCidades} from './cidades';
+export { getByIdValidation as getByIdValidationCidades} from './cidades';
+export { deleteByIdValidation as deleteByIdValidationCidades} from './cidades';
+export { deleteById as deleteByIdCidades} from './cidades';
+export {updateById as updateByIdCidades} from './cidades';
+export {updateByIdValidation as updateByIdValidationCidades} from './cidades';
