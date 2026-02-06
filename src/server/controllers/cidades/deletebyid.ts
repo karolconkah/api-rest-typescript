@@ -1,33 +1,28 @@
-import { Request, Response } from 'express';
-import { StatusCodes } from 'http-status-codes';
-import * as yup from 'yup';
+import { Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import * as yup from "yup";
 
-import { validation } from '../../shared/middlewares';
+import { validation } from "../../shared/middlewares";
 
 interface IParamProps {
-  id: string;
+  id?: number;
 }
 
 export const deleteByIdValidation = validation((getSchema) => ({
   params: getSchema<IParamProps>(
-    yup.object({
-      id: yup
-        .string()
-        .required()
-        .matches(/^[1-9]\d*$/, 'Deve ser um número maior que 0'),
+    yup.object().shape({
+      id: yup.number().integer().required().moreThan(0),
     })
   ),
 }));
 
-export const deleteById = async (req: Request, res: Response) => {
-  const { id } = req.params as unknown as IParamProps;
+export const deleteById = async (req: Request<IParamProps>, res: Response) => {
+  // se quiser manter a “regra fake” do curso pra simular erro:
+  if (Number(req.params.id) === 99999) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: { default: "Registro não encontrado" },
+    });
+  }
 
-  console.log(req.params);
-
-  const idNumber = Number(id);
-  console.log('ID number:', idNumber);
-
-  return res
-    .status(StatusCodes.INTERNAL_SERVER_ERROR)
-    .send('Não implementado!');
+  return res.status(StatusCodes.NO_CONTENT).send();
 };

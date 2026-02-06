@@ -5,30 +5,25 @@ import * as yup from 'yup';
 import { validation } from '../../shared/middlewares';
 
 interface IParamProps {
-  id: string;
+  id?: number;
 }
 
 export const getByIdValidation = validation((getSchema) => ({
   params: getSchema<IParamProps>(
-    yup.object({
-      id: yup
-        .string()
-        .required()
-        .matches(/^[1-9]\d*$/, 'Deve ser um número maior que 0'),
+    yup.object().shape({
+      id: yup.number().integer().required().moreThan(0),
     })
   ),
 }));
 
-export const getById = async (req: Request, res: Response) => {
-  // se quiser, você pode “ler como” IParamProps só aqui:
-  const { id } = req.params as unknown as IParamProps;
-;
+export const getById = async (req: Request<IParamProps>, res: Response) => {
+  if (Number(req.params.id) === 99999) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: { default: "Registro não encontrado" },
+    });
+  }
 
-  console.log(req.params);
-
-  const idNumber = Number(id);
-
-  return res
-    .status(StatusCodes.INTERNAL_SERVER_ERROR)
-    .send('Não implementado!');
-};
+return res.status(StatusCodes.OK).json({
+    id: req.params.id,
+    nome: 'Caxias do Sul',
+  });};
