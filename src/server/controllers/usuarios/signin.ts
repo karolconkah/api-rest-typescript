@@ -33,17 +33,21 @@ export const signIn = async (
         default: 'Email ou senha são inválidos',
       }
     });
-  } else {
-
-    const accessToken = sign({ uid: result.id });
-    if (accessToken === 'JWT_SECRET_NOT_FOUND') {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        errors: {
-          default: 'Erro ao gerar o token de acesso'
-        }
-      });
-    }
-
-    return res.status(StatusCodes.OK).json({ accessToken });
   }
+
+  const passwordMatch = await verifyPassword(senha, result.senha);
+  if (!passwordMatch) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      errors: { default: 'Email ou senha são inválidos' },
+    });
+  }
+
+  const accessToken = sign({ uid: result.id });
+  if (accessToken === 'JWT_SECRET_NOT_FOUND') {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      errors: { default: 'Erro ao gerar o token de acesso' },
+    });
+  }
+
+  return res.status(StatusCodes.OK).json({ accessToken });
 };
