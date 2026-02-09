@@ -21,3 +21,11 @@ export { deleteByIdValidation as deleteByIdValidationPessoas} from './pessoas';
 export {updateById as updateByIdPessoas} from './pessoas';
 export {updateByIdValidation as updateByIdValidationPessoas} from './pessoas';
 
+
+export { signIn as signInUsuarios } from './usuarios';
+export { signInValidation as signInValidationUsuarios } from './usuarios';
+export { signUp as signUpUsuarios } from './usuarios';
+export { signUpValidation as signUpValidationUsuarios } from './usuarios';
+
+
+

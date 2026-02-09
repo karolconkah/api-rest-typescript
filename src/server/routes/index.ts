@@ -9,7 +9,9 @@ import { createPessoas, createPessoasValidation } from '../controllers';
 import { getAllPessoas, getAllPessoasValidation} from '../controllers';
 import { getByIdPessoas, getByIdValidationPessoas } from '../controllers';
 import { deleteByIdPessoas, deleteByIdValidationPessoas} from '../controllers';
-import { updateByIdPessoas, updateByIdValidationPessoas} from '../controllers'
+import { updateByIdPessoas, updateByIdValidationPessoas} from '../controllers';
+import { signInUsuarios, signInValidationUsuarios } from '../controllers';
+import { signUpUsuarios, signUpValidationUsuarios } from '../controllers';
 
 const router = Router();
 
@@ -40,5 +42,8 @@ router.post('/pessoas', createPessoasValidation, createPessoas);
 router.get('/pessoas/:id', getByIdValidationPessoas, getByIdPessoas);
 router.put('/pessoas/:id', updateByIdValidationPessoas, updateByIdPessoas);
 router.delete('/pessoas/:id', deleteByIdValidationPessoas, deleteByIdPessoas);
+
+router.post('/entrar', signInValidationUsuarios, signInUsuarios);
+router.post('/cadastrar', signUpValidationUsuarios, signUpUsuarios);
 
 export { router };
