@@ -13,6 +13,8 @@ import { updateByIdPessoas, updateByIdValidationPessoas} from '../controllers';
 import { signInUsuarios, signInValidationUsuarios } from '../controllers';
 import { signUpUsuarios, signUpValidationUsuarios } from '../controllers';
 
+import { ensureAuthenticated } from '../shared/middlewares';
+
 const router = Router();
 
 //console.log('DEBUG typeof create =', typeof createCidade);
@@ -31,17 +33,17 @@ router.get('/', (_, res) => {
   return res.send('Olá, DEV!');
 });
 
-router.get('/cidades', getAllCidadesValidation, getAllCidades);
-router.post('/cidades', createCidadeValidation, createCidade);
-router.get('/cidades/:id', getByIdValidationCidades, getByIdCidades);
-router.put('/cidades/:id', updateByIdValidationCidades,updateByIdCidades);
-router.delete('/cidades/:id', deleteByIdValidationCidades, deleteByIdCidades);
+router.get('/cidades', ensureAuthenticated, getAllCidadesValidation, getAllCidades);
+router.post('/cidades', ensureAuthenticated, createCidadeValidation, createCidade);
+router.get('/cidades/:id', ensureAuthenticated, getByIdValidationCidades, getByIdCidades);
+router.put('/cidades/:id', ensureAuthenticated, updateByIdValidationCidades,updateByIdCidades);
+router.delete('/cidades/:id', ensureAuthenticated, deleteByIdValidationCidades, deleteByIdCidades);
 
-router.get('/pessoas', getAllPessoasValidation, getAllPessoas);
-router.post('/pessoas', createPessoasValidation, createPessoas);
-router.get('/pessoas/:id', getByIdValidationPessoas, getByIdPessoas);
-router.put('/pessoas/:id', updateByIdValidationPessoas, updateByIdPessoas);
-router.delete('/pessoas/:id', deleteByIdValidationPessoas, deleteByIdPessoas);
+router.get('/pessoas', ensureAuthenticated, getAllPessoasValidation, getAllPessoas);
+router.post('/pessoas', ensureAuthenticated, createPessoasValidation, createPessoas);
+router.get('/pessoas/:id', ensureAuthenticated, getByIdValidationPessoas, getByIdPessoas);
+router.put('/pessoas/:id', ensureAuthenticated, updateByIdValidationPessoas, updateByIdPessoas);
+router.delete('/pessoas/:id', ensureAuthenticated, deleteByIdValidationPessoas, deleteByIdPessoas);
 
 router.post('/entrar', signInValidationUsuarios, signInUsuarios);
 router.post('/cadastrar', signUpValidationUsuarios, signUpUsuarios);
