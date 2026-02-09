@@ -6,6 +6,8 @@ import { getByEmail as getByEmailUsuarios } from "../../database/providers/usuar
 import { validation } from '../../shared/middlewares';
 import { IUsuario } from '../../database/models';
 import { verifyPassword } from '../../shared/services';
+import { sign, verify } from '../../shared/services';
+
 
 interface IBodyProps extends Omit<IUsuario, 'id' | 'nome'> {}
 
@@ -29,17 +31,19 @@ export const signIn = async (
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
         default: 'Email ou senha são inválidos',
-      },
+      }
     });
+  } else {
+
+    const accessToken = sign({ uid: result.id });
+    if (accessToken === 'JWT_SECRET_NOT_FOUND') {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        errors: {
+          default: 'Erro ao gerar o token de acesso'
+        }
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({ accessToken });
   }
-
-  const passwordMatch = await verifyPassword(senha, result.senha);
-  if (!passwordMatch) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({
-      errors: {
-        default: 'Email ou senha são inválidos',
-      },
-    });}
-
-  return res.status(StatusCodes.OK).json({ accessToken: 'teste.teste.teste' });
 };
