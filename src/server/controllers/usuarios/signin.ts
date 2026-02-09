@@ -5,37 +5,41 @@ import * as yup from 'yup';
 import { getByEmail as getByEmailUsuarios } from "../../database/providers/usuarios/getbyemail";
 import { validation } from '../../shared/middlewares';
 import { IUsuario } from '../../database/models';
+import { verifyPassword } from '../../shared/services';
 
-
-interface IBodyProps extends Omit<IUsuario, 'id' | 'nome'> { }
+interface IBodyProps extends Omit<IUsuario, 'id' | 'nome'> {}
 
 export const signInValidation = validation((getSchema) => ({
-  body: getSchema<IBodyProps>(yup.object().shape({
-    senha: yup.string().required().min(6),
-    email: yup.string().required().email().min(5),
-  })),
+  body: getSchema<IBodyProps>(
+    yup.object().shape({
+      senha: yup.string().required().min(6),
+      email: yup.string().required().email().min(5),
+    })
+  ),
 }));
 
-export const signIn = async (req: Request<{}, {}, IBodyProps>, res: Response) => {
+export const signIn = async (
+  req: Request<{}, {}, IBodyProps>,
+  res: Response
+) => {
   const { email, senha } = req.body;
-
 
   const result = await getByEmailUsuarios(email);
   if (result instanceof Error) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
-        default: 'Email ou senha são inválidos'
-      }
+        default: 'Email ou senha são inválidos',
+      },
     });
   }
 
-  if (senha !== result.senha) {
+  const passwordMatch = await verifyPassword(senha, result.senha);
+  if (!passwordMatch) {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       errors: {
-        default: 'Email ou senha são inválidos'
-      }
-    });
-  } else {
-    return res.status(StatusCodes.OK).json({ accessToken: 'teste.teste.teste' });
-  }
+        default: 'Email ou senha são inválidos',
+      },
+    });}
+
+  return res.status(StatusCodes.OK).json({ accessToken: 'teste.teste.teste' });
 };
