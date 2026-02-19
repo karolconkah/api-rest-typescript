@@ -1,26 +1,80 @@
-Este projeto é uma API Rest em NodeJS e Typescript desenvolvida para fins de aprendizado no curso de API Rest em NodeJS e Typescript do canal Lucas Souza Dev no YouTube.
-
+API REST - Node.js + TypeScript
 Sobre o projeto
-No projeto é abordado conceitos importantes sobre o mundo do backend.
 
-Tem conceitos como:
+Esta é uma API REST desenvolvida com Node.js e TypeScript para fins de aprendizado e aprofundamento em backend.
+
+O projeto foi desenvolvido com base em estudos no curso de API REST do canal Lucas Souza Dev, porém implementado e estruturado de forma independente.
+
+Conceitos abordados
 
 Endpoints
+
 Controllers
+
 Banco de dados SQL
-Query builder
-Migrations de banco
-Seeds de banco
-Controle de usuário com email e senha
+
+Query Builder
+
+Migrations
+
+Seeds
+
+Autenticação com e-mail e senha
+
 Criptografia de senha
+
 Login de usuários
-Geração e utilização de tokens JWT
-Validação minuciosa de dados que entram nos endpoints
-Paginação de consultas
-Filtros de consultas
-Testes de código para garantir qualidade das entregas
-Uso de diferentes bancos de dados com um mesmo código
-Boas práticas de código, com conceitos do clean code
-Está é uma API Rest, então não tem interface nesse repositório. Porém, é possível conectar um interface a ele. A interface está em outro repositório.
+
+Geração e validação de tokens JWT
+
+Validação de dados
+
+Paginação
+
+Filtros de consulta
+
+Testes automatizados
+
+Boas práticas e princípios de Clean Code
+
+Integração
+
+Esta API não possui interface neste repositório.
+
+O frontend que consome esta API está disponível no repositório:
+
+karolconkah/frontend-react
+
+Como rodar o projeto
+Pré-requisitos
+
+Node.js instalado
+
+Yarn instalado
+
+1. Clone o seu repositório
+git clone https://github.com/karolconkah/api-rest-typescript.git
+2. Acesse a pasta do projeto
+cd api-rest-typescript
+3. Instale as dependências
+yarn install
+4. Configure as variáveis de ambiente
+
+Crie um arquivo .env na raiz do projeto com o seguinte conteúdo:
+
+PORT=3333
+NODE_ENV=dev
+IS_LOCALHOST=true
+ENABLED_CORS=http://localhost:3000
+JWT_SECRET=uma_string_segura
+5. Rode o projeto
+yarn start
+
+Servidor rodando em:
+
+http://localhost:3333
+Autora
+
+Karoline Vieira Neves
 
 No repositório frontend-react há um projeto em react que se conecta com este backend.
