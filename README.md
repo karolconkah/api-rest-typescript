@@ -1,4 +1,5 @@
 API REST - Node.js + TypeScript
+
 Sobre o projeto
 
 Esta é uma API REST desenvolvida com Node.js e TypeScript para fins de aprendizado e aprofundamento em backend.
@@ -76,5 +77,3 @@ http://localhost:3333
 Autora
 
 Karoline Vieira Neves
-
-No repositório frontend-react há um projeto em react que se conecta com este backend.
